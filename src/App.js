@@ -7,17 +7,25 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      insertAt: 0,
       memos: []
     };
   }
 
-  onSave(text) {
+  onSave = (text) => {
+    const insertAt = this.state.insertAt;
+    const newMemosFirst = this.state.memos.slice(0, insertAt);
+    const newMemosLast  = this.state.memos.slice(insertAt);
+    const newMemos = newMemosFirst.concat({content:text}).concat(newMemosLast);
     this.setState({
-      memos: this.state.memos.concat([
-        {
-          content: text
-        }
-      ])
+      insertAt: newMemos.length,
+      memos: newMemos
+    });
+  }
+
+  onInsert = (index) => {
+    this.setState({
+      insertAt: index
     });
   }
 
@@ -29,10 +37,12 @@ class App extends Component {
         </header>
         <div className="App-intro">
         <Draft
+      onInsert={this.onInsert}
       memos={this.state.memos}
         />
         <NewMemo
-      onSave={(text) => this.onSave(text)}
+      insertAt={this.state.insertAt}
+      onSave={this.onSave}
         />
         </div>
       </div>

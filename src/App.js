@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
 import './App.css';
 import NewMemo from './NewMemo.js';
+import Draft from './Draft.js';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      memos: [
-        {
-          content: 'sample'
-        }
-      ]
+      memos: []
     };
   }
 
@@ -31,6 +28,9 @@ class App extends Component {
           <h1 className="App-title">Ore Note</h1>
         </header>
         <div className="App-intro">
+        <Draft
+      memos={this.state.memos}
+        />
         <NewMemo
       onSave={(text) => this.onSave(text)}
         />

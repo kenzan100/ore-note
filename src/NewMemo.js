@@ -24,6 +24,7 @@ class NewMemo extends Component {
 
   onSave() {
     this.props.onSave(this.state.value);
+    this.setState({value: ''});
   }
 
   render() {
